@@ -60,6 +60,41 @@ routes.get('/emp/employees/:id', async (req, res) => {
     }
 });
 
+routes.put('/emp/employees/:id', async (req, res) => {
+    const id = req.params.id;
+    try{
+        const employee = await EmpModel.findById(id).exec();
+        if(!employee){
+            return res.status(404).send({message: 'Employee not found'});
+        }
+        const returned = await EmpModel.findByIdAndUpdate(id, req.body, {new: true});
+        if(!returned) {
+            return res.status(500).send({message: err.message});
+        }
+        return res.status(200).send({message: "Employee details updated successfully."});
+    }
+    catch (err){
+        console.log(err);
+        res.status(500).send({message: err.message});
+    }
+});
+
+routes.delete('/emp/employees/:id', async (req, res) => {
+    const id = req.params.id;
+    try{
+        const employee = await EmpModel.findById(id).exec();
+        if(!employee){
+            return res.status(404).send({message: 'Employee not found'});
+        }
+        await EmpModel.findByIdAndDelete(id).exec();
+        return res.status(200).send({message: "Employee deleted successfully."});
+    }
+    catch (err) {
+        console.log(err);
+        return res.status(500).send({message: err.message});
+    }
+})
+
 const mapToEmployeeDTO = (dbEmployee) => {
     return {
         employee_id: dbEmployee._id,
