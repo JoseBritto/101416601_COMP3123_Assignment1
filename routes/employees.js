@@ -14,7 +14,7 @@ routes.get("/emp/employees", async (req, res) => {
         return res.json(employees);
     }
     catch(err){
-        res.status(400).send({message: err.message})
+        res.status(500).send({message: err.message})
     }
 });
 
@@ -56,7 +56,7 @@ routes.get('/emp/employees/:id', async (req, res) => {
     }
     catch(err){
         console.log(err);
-        res.status(400).send({message: err.message});
+        res.status(500).send({message: err.message});
     }
 });
 
