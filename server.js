@@ -6,7 +6,9 @@ const empRoutes = require('./routes/employees');
 
 dotenv.config();
 
-const SERVER_PORT = process.env.PORT;
+let SERVER_PORT = process.env.PORT;
+if(!SERVER_PORT)
+    SERVER_PORT = 3001;
 const DB_CONNECTION_STRING = process.env.DB_CONNECTION_STRING;
 
 mongoose.connect(DB_CONNECTION_STRING).then(() => {

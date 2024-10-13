@@ -10,18 +10,7 @@ const routes = express.Router();
 routes.get("/emp/employees", async (req, res) => {
     try{
         let employees = await EmpModel.find({}).exec();
-        employees = employees.map(x => {
-            return {
-                employee_id: x._id,
-                first_name: x.first_name,
-                last_name: x.last_name,
-                email: x.email,
-                position: x.position,
-                salary: x.salary,
-                date_of_joining: x.date_of_joining,
-                department: x.department
-            };
-        });
+        employees = employees.map(mapToEmployeeDTO);
         return res.json(employees);
     }
     catch(err){
@@ -54,5 +43,34 @@ routes.post("/emp/employees", async (req, res) => {
 
 });
 
+
+routes.get('/emp/employees/:id', async (req, res) => {
+    const id = req.params.id;
+    try{
+        const employee = await EmpModel.findById(id).exec();
+        if(!employee){
+            return res.status(404).send({message: "Employee not found"});
+        }
+        const empDTO = mapToEmployeeDTO(employee);
+        return res.json(empDTO);
+    }
+    catch(err){
+        console.log(err);
+        res.status(400).send({message: err.message});
+    }
+});
+
+const mapToEmployeeDTO = (dbEmployee) => {
+    return {
+        employee_id: dbEmployee._id,
+        first_name: dbEmployee.first_name,
+        last_name: dbEmployee.last_name,
+        email: dbEmployee.email,
+        position: dbEmployee.position,
+        salary: dbEmployee.salary,
+        date_of_joining: dbEmployee.date_of_joining,
+        department: dbEmployee.department
+    };
+}
 
 module.exports = routes;
