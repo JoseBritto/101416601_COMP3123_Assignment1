@@ -67,7 +67,11 @@ routes.put('/emp/employees/:id', async (req, res) => {
         if(!employee){
             return res.status(404).send({message: 'Employee not found'});
         }
-        const returned = await EmpModel.findByIdAndUpdate(id, req.body, {new: true});
+        let body = req.body;
+
+        body.updated_at = Date.now();
+
+        const returned = await EmpModel.findByIdAndUpdate(id, body, {new: true});
         if(!returned) {
             return res.status(500).send({message: err.message});
         }
