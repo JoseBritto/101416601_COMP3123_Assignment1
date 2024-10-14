@@ -33,6 +33,49 @@ app.use("/api/v1", empValidators);
 app.use("/api/v1", userRoutes);
 app.use("/api/v1", empRoutes);
 
+app.use('/', (req, res) => {
+    res.json({
+        author: 'Jose Britto Saaji',
+        for: 'COMP 3123',
+        demo_username: 'johndoe',
+        demo_password: 'pass123',
+        baseUrl: '/api/v1',
+        endpoints: {
+            user_endpoints: [
+                {
+                    url: '/user/login',
+                    method: 'POST'
+                },
+                {
+                    url: '/user/signup',
+                    method: 'POST'
+                }
+            ],
+            employee_endpoints: [
+                {
+                    url: '/emp/employees',
+                    method: 'GET',
+                },
+                {
+                    url: '/emp/employees/:id',
+                    method: 'GET'
+                },
+                {
+                    url: '/emp/employees',
+                    method: 'POST'
+                },
+                {
+                    url: '/emp/employees',
+                    method: 'PUT'
+                },
+                {
+                    url: '/emp/employees/:id',
+                    method: 'DELETE'
+                }
+            ]
+        }
+    })
+})
 
 app.listen(SERVER_PORT, () =>{
     console.log(`Server running at http://localhost:${SERVER_PORT}/`)
