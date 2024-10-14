@@ -9,8 +9,10 @@ router.post('/user/signup', (req, res, next) => {
         UserDTO.parse(req.body);
 
         //Do not allow users to overwrite created_at date
-        req.body.created_at = Date.now();
-        req.body.updated_at = Date.now();
+        if(req.body.created_at)
+            req.body.created_at = Date.now();
+        if(req.body.updated_at)
+            req.body.updated_at = Date.now();
     } catch(err) {
         res.status(400).send({
             message: 'Invalid input. User creation failed',
