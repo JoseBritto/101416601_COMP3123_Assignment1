@@ -22,14 +22,6 @@ routes.post("/emp/employees", async (req, res) => {
 
     try{
         const empData = await EmpModel.create(req.body);
-        await EmpModel.validate(empData, (err, emp) => {
-            if (err) {
-                res.status(400).send({
-                    message: err.message,
-                });
-            }
-        });
-
         await empData.save();
         res.status(201).send({
             message: "Employee created successfully.",
