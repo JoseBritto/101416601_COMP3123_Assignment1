@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const userRoutes = require('./routes/users');
 const empRoutes = require('./routes/employees');
 const userValidators = require('./validators/users');
+const empValidators = require('./validators/employees');
 
 /*
     Required env variables: DB_CONNECTION_STRING
@@ -27,6 +28,7 @@ app.use(express.json());
 app.use(express.urlencoded());
 
 app.use("/api/v1", userValidators);
+app.use("/api/v1", empValidators);
 
 app.use("/api/v1", userRoutes);
 app.use("/api/v1", empRoutes);
