@@ -5,6 +5,7 @@ const userRoutes = require('./routes/users');
 const empRoutes = require('./routes/employees');
 const userValidators = require('./validators/users');
 const empValidators = require('./validators/employees');
+const cors = require('cors');
 
 /*
     Required env variables: DB_CONNECTION_STRING
@@ -24,6 +25,7 @@ mongoose.connect(DB_CONNECTION_STRING).then(() => {
 });
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded());
 
